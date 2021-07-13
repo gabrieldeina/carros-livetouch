@@ -1,13 +1,14 @@
 package com.carro.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.DeleteMapping;
+
+import com.carro.domain.dto.CarroDTO;
 
 @Service
 public class CarroService {
@@ -15,38 +16,43 @@ public class CarroService {
 	@Autowired
 	private CarroRepository rep;
 	
-	public Optional<Carro> getCarrosById(Long id) {
-		return rep.findById(id);
+	public List<CarroDTO> getCarros() {
+		return rep.findAll().stream().map(CarroDTO::create).collect(Collectors.toList());
+//		List<Carro> carros = new ArrayList<>();
+		
+//		List<CarroDTO> list = carros.stream().map(CarroDTO::new).collect(Collectors.toList());
+				
+//		List<CarroDTO> list = new ArrayList<>();
+//		for(Carro c: carros) {
+//			list.add(new CarroDTO(c));
+
+		
+//		return list;
+		}
+	
+	public Optional<CarroDTO> getCarrosById(Long id) {
+//		Optional<Carro> carro = rep.findById(id);
+//		if(carro.isPresent()) {
+//			return Optional.of(new CarroDTO(carro.get()));
+//		}
+//		return null; 
+		return rep.findById(id).map(CarroDTO::create);
 	}
 
-	public Iterable<Carro> getCarrosByTipo(String tipo) {
-		return rep.findByTipo(tipo);
-	}
-	
-	public Iterable<Carro> getCarros() {
-		return rep.findAll();
-	}
-	
-	public List<Carro> getCarrosFake() {
-		List<Carro> carros = new ArrayList<>();
-		
-		carros.add(new Carro(1L, "Fusca"));
-		carros.add(new Carro(2L, "Brasilia"));
-		carros.add(new Carro(3L, "Gol"));
-		
-		return carros;
+	public List<CarroDTO> getCarrosByTipo(String tipo) {
+		return rep.findByTipo(tipo).stream().map(CarroDTO::create).collect(Collectors.toList());
 	}
 
 	public Carro save(Carro carro) {
 		return rep.save(carro);
 	}
 
-	public Carro update(Carro carro, Long id) {
+	public CarroDTO update(Carro carro, Long id) {
 		Assert.notNull(id, "Não foi possível encontrar o carro!");
 		
-		Optional<Carro> optional = getCarrosById(id);
+		Optional<CarroDTO> optional = getCarrosById(id);
 		if(optional.isPresent()) {
-			Carro db = optional.get();
+			CarroDTO db = optional.get();
 			db.setNome(carro.getNome());
 			db.setTipo(carro.getTipo());
 			
@@ -58,8 +64,7 @@ public class CarroService {
 	}
 
 	public String delete(Long id) {
-		Optional<Carro> carro = getCarrosById(id);
-		if(carro.isPresent()) {
+		if(getCarrosById(id).isPresent()) {
 			rep.deleteById(id);
 			return "Carro deletado com sucesso.";
 		} else {
@@ -67,5 +72,13 @@ public class CarroService {
 		}
 	}
 	
-	
+//	public List<Carro> getCarrosFake() {
+//	List<Carro> carros = new ArrayList<>();
+//	
+//	carros.add(new Carro(1L, "Fusca"));
+//	carros.add(new Carro(2L, "Brasilia"));
+//	carros.add(new Carro(3L, "Gol"));
+//	
+//	return carros;
+//}
 }

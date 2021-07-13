@@ -5,7 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class Carro {
 
 	@Id
@@ -14,35 +17,4 @@ public class Carro {
 	private String nome;
 	private String tipo;
 	
-	public Carro() {
-		
-	}
-	
-	public Carro(long id, String nome) {
-		super();
-		this.id = id;
-		this.nome = nome;
-	}
-	
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
 }

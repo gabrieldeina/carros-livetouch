@@ -1,7 +1,13 @@
 package com.carro.domain;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
 
-public interface CarroRepository extends CrudRepository<Carro, Long>{
-	Iterable<Carro> findByTipo(String tipo);
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.carro.domain.dto.CarroDTO;
+
+public interface CarroRepository extends JpaRepository<Carro, Long>{
+	List<Carro> findByTipo(String tipo);
+
+	void save(CarroDTO db);
 }
