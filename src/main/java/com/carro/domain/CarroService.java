@@ -43,16 +43,17 @@ public class CarroService {
 		return rep.findByTipo(tipo).stream().map(CarroDTO::create).collect(Collectors.toList());
 	}
 
-	public Carro save(Carro carro) {
-		return rep.save(carro);
+	public CarroDTO save(Carro carro) {
+		Assert.isNull(carro.getId(), "Não foi possível inserir o registro");
+		return CarroDTO.create(rep.save(carro));
 	}
 
-	public CarroDTO update(Carro carro, Long id) {
+	public Carro update(Carro carro, Long id) {
 		Assert.notNull(id, "Não foi possível encontrar o carro!");
 		
-		Optional<CarroDTO> optional = getCarrosById(id);
+		Optional<Carro> optional = rep.findById(id);
 		if(optional.isPresent()) {
-			CarroDTO db = optional.get();
+			Carro db = optional.get();
 			db.setNome(carro.getNome());
 			db.setTipo(carro.getTipo());
 			
@@ -63,13 +64,12 @@ public class CarroService {
 		}
 	}
 
-	public String delete(Long id) {
+	public boolean delete(Long id) {
 		if(getCarrosById(id).isPresent()) {
 			rep.deleteById(id);
-			return "Carro deletado com sucesso.";
-		} else {
-			return "Carro não encontrado.";
+			return true;
 		}
+		return false;
 	}
 	
 //	public List<Carro> getCarrosFake() {
