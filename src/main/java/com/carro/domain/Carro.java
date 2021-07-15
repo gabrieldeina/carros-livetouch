@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.Data;
 
@@ -17,10 +16,10 @@ public class Carro {
 	private Long id;
 	private String nome;
 	private String tipo;
-//	private String descricao;
-//	private String urlFoto;
-//	private String urlVideo;
-//	private String latitude;
-//	private String longitude;
-	
+	private String descricao;
+	private String url_foto;
+	private String url_video;
+	private String latitude;
+	private String longitude;
+
 }
