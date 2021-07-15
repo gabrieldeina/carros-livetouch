@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.carro.domain.dto.CarroDTO;
+import com.carro.api.exception.ObjectNotFoundException;
 
 @Service
 public class CarroService {
@@ -30,13 +31,14 @@ public class CarroService {
 //		return list;
 		}
 	
-	public Optional<CarroDTO> getCarrosById(Long id) {
-//		Optional<Carro> carro = rep.findById(id);
+	public CarroDTO getCarrosById(Long id) {
+		Optional<Carro> carro = rep.findById(id);
+		
+		return carro.map(CarroDTO::create).orElseThrow(() -> new ObjectNotFoundException("Carro não encontrado"));
 //		if(carro.isPresent()) {
 //			return Optional.of(new CarroDTO(carro.get()));
 //		}
-//		return null; 
-		return rep.findById(id).map(CarroDTO::create);
+//		return null;
 	}
 
 	public List<CarroDTO> getCarrosByTipo(String tipo) {
@@ -64,12 +66,8 @@ public class CarroService {
 		}
 	}
 
-	public boolean delete(Long id) {
-		if(getCarrosById(id).isPresent()) {
-			rep.deleteById(id);
-			return true;
-		}
-		return false;
+	public void delete(Long id) {
+		rep.deleteById(id);
 	}
 	
 //	public List<Carro> getCarrosFake() {
