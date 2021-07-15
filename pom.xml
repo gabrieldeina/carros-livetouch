@@ -83,6 +83,7 @@
             <version>2.7.0</version>
             <scope>compile</scope>
         </dependency>
+        
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
@@ -90,6 +91,11 @@
             <scope>compile</scope>
         </dependency>
 
+		<dependency>
+		    <groupId> org.apache.tomcat.embed </groupId>
+		    <artifactId> tomcat-embed-jasper </artifactId>
+		    <scope>provided</scope>
+    	</dependency>
 
     </dependencies>
 
