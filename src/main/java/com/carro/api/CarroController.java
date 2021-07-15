@@ -21,7 +21,7 @@ import com.carro.domain.dto.CarroDTO;
 
 @RestController
 @RequestMapping("/api/v1/carros")
-public class CarrosController {
+public class CarroController {
 
 	@Autowired
 	private CarroService service;
